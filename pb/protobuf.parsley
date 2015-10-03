@@ -1,0 +1,39 @@
+proto = syntax ws ( topLevelDef )*:bindings ws -> Protobuf(
+    bindings=dict((definition.name, definition) for definition in bindings),
+)
+syntax = "syntax" ws "=" ws quote "proto3" quote ";"
+
+topLevelDef = message
+
+message = "message" ws messageName:name ws messageBody:fields -> Message(
+    name=name, fields=fields,
+)
+messageName = ident
+messageBody = "{" ws ( field )*:fields ws "}" -> fields
+
+
+field = ("repeated")? ws type:type ws fieldName:name ws "="
+                      ws fieldNumber ws ( "[" fieldOptions "]" )? ";" -> Field(
+    name=name, type=type,
+)
+fieldOptions = fieldOption ( ","  fieldOption )*
+fieldOption = optionName ws "=" ws constant
+fieldName = ident
+fieldNumber = intLit
+
+enumName = ident
+
+type = "double" | "float" | "int32" | "int64" | "uint32" | "uint64"
+     | "sint32" | "sint64" | "fixed32" | "fixed64" | "sfixed32" | "sfixed64"
+     | "bool" | ("string" -> types.STRING) | "bytes" | messageType | enumType
+messageType = "."? (ident ".")* messageName
+enumType = "."? (ident ".")* enumName
+
+ident = <letter ( letter | digit | '_' )*>
+
+intLit = decimalLit | octalLit | hexLit
+decimalLit = digit:x ?(x != "0") digit*
+octalLit = "0" digit:x ?(x in "01234567")
+hexLit = "0" ("x" | "X") digit:x ?(x in "0123456789abcdef")
+
+quote = '`' | '"'
