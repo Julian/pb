@@ -31,4 +31,5 @@ setup(
     license="MIT",
     long_description=long_description,
     url="https://github.com/Julian/pb",
+    include_package_data=True,
 )
