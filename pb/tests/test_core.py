@@ -42,7 +42,7 @@ class TestParser(TestCase):
         self.assertEqual(
             protobuf, core.Protobuf(
                 bindings={
-                    "Person" : core.Message(
+                    "Person": core.Message(
                         name="Person",
                         fields=[core.Field(name="name", type=types.STRING)],
                     ),

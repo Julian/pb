@@ -1,4 +1,4 @@
-from characteristic import Attribute, attributes
+from characteristic import attributes
 
 
 @attributes([])

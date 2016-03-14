@@ -40,9 +40,9 @@ class Field(object):
 _GRAMMAR = make_grammar(
     source=pkgutil.get_data(__package__, "protobuf.parsley"),
     bindings={
-        "Protobuf" : Protobuf,
-        "Message" : Message,
-        "Field" : Field,
-        "types" : types,
+        "Protobuf": Protobuf,
+        "Message": Message,
+        "Field": Field,
+        "types": types,
     },
 )
